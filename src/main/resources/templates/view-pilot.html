@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<title>Add Pilot</title>
+<style>
+table {
+	width: absolute;
+	height: 50%;
+}
+
+table td, table th {
+	border: 1px solid grey;
+}
+
+table th {
+	background: #eee;
+}
+
+.pagination-div {
+	user-select: none;
+}
+
+.pagination-div span {
+	border-radius: 3px;
+	border: 1px solid #999;
+	padding: 5px;
+	margin: 10px 0px 0px 10px;
+	display: inline-block
+}
+
+span.selected {
+	background: #ccf;
+}
+</style>
+
+</head>
+<body>
+	<h1>Data Pilot</h1>
+	
+	<form th:action="@{/pilot/view}" method="POST">
+		<h3 th:text="'Pilot License Number : ' +${license_number}"></h3>
+		<h3 th:text="'Name : ' +${name}"></h3>
+			<h3 th:text="'Fly Hour : ' +${fly_hour}"></h3>
+		<a th:href="@{'/flight/add/' + ${license_number}}">Add
+			Flight</a>
+			
+			<br><br>
+		<a th:href="@{'/pilot/delete/' + ${license_number}}">Delete Pilot</a> ||
+		<a th:href="@{'/pilot/update/' + ${license_number}}">Update Pilot</a>
+		
+		<br><br><br>
+		<h2>
+			<p th:text="'Daftar Flight Pilot ' + ${name}"></p>
+		</h2>
+
+		<table>
+			<thead>
+				<tr>
+					<th style="text-align: center">No.</th>
+					<th style="text-align: center">Flight Number</th>
+					<th style="text-align: center">Origin</th>
+					<th style="text-align: center">Destination</th>
+					<th style="text-align: center">Time</th>
+					<th style="text-align: center">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="fl, i : ${fList}">
+					<td th:text="${i.count}"></td>
+					<td th:text="${fl.flightNumber}"></td>
+					<td th:text="${fl.origin}"></td>
+					<td th:text="${fl.destination}"></td>
+					<td th:text="${fl.time}"></td>
+					<td><a th:href="@{'/flight/delete/' + ${fl.flightNumber}}">Delete</a> || 
+					<a th:href="@{'/flight/update/' + ${fl.flightNumber}}">Update</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</body>
+</html>

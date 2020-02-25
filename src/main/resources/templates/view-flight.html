@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<title>View FLight</title>
+<style>
+table {
+	width: absolute;
+	height: 50%;
+}
+
+table td, table th {
+	border: 1px solid grey;
+}
+
+table th {
+	background: #eee;
+}
+
+.pagination-div {
+	user-select: none;
+}
+
+.pagination-div span {
+	border-radius: 3px;
+	border: 1px solid #999;
+	padding: 5px;
+	margin: 10px 0px 0px 10px;
+	display: inline-block
+}
+
+span.selected {
+	background: #ccf;
+}
+</style>
+</head>
+<body>
+	<h2 th:if="${found}" class="error" th:style="${'color: blue;'}">
+		<i>Daftar Flight</i>
+	</h2>
+	<h2 th:if="${notFound}" class="error" th:style="${'color: red;'}">
+		<i>Data Tidak Ditemukan</i>
+	</h2>
+	<form th:action="@{/flight/view}" method="POST">
+		<h2 th:style="${'color: green;'}">
+			
+		</h2>
+		<table>
+			<thead>
+				<tr>
+					<th style="text-align: center">No.</th>
+					<th style="text-align: center">Flight Number</th>
+					<th style="text-align: center">Pilot Name</th>
+					<th style="text-align: center">Pilot License Number</th>
+					<th style="text-align: center">Origin</th>
+					<th style="text-align: center">Destination</th>
+					<th style="text-align: center">Time</th>
+					<th style="text-align: center">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="fl, i : ${fList}">
+					<td th:text="${i.count}"></td>
+					<td th:text="${fl.flightNumber}"></td>
+					<td th:text="*{fl.pilot.getName()}"></td>
+					<td th:text="*{fl.pilot.getLicenseNumber()}"></td>
+					<td th:text="${fl.origin}"></td>
+					<td th:text="${fl.destination}"></td>
+					<td th:text="${fl.time}"></td>
+					<td><a th:href="@{'/flight/delete/' + ${fl.flightNumber}}">Delete</a> || 
+					<a th:href="@{'/flight/update/' + ${fl.flightNumber}}">Update</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</body>
+</html>
